@@ -18,7 +18,7 @@ defmodule FlyHealthCheck.Startup do
   @impl true
   def init(_) do
     Logger.info("Startup process started")
-    {:ok, nil, 2500}
+    {:ok, nil, 5000}
   end
 
   @impl true
