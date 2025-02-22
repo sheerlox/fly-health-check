@@ -1,18 +1,19 @@
-# FlyHealthCheck
+# FlyHealthCheck (minimal reproduction)
 
-To start your Phoenix server:
+Minimal reproduction repository of [traffic being routed to Fly.io instances not passing health check](https://community.fly.io/t/traffic-still-routed-to-instances-not-passing-health-check/24006).
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+## Files of interest
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- [`lib/fly_health_check/startup.ex`](./lib/fly_health_check/startup.ex)
+- [`lib/fly_health_check_web/plugs/slow_request.ex`](./lib/fly_health_check_web/plugs/slow_request.ex)
+- [`lib/fly_health_check_web/plugs/health_check.ex`](./lib/fly_health_check_web/plugs/health_check.ex)
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Running the test
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+1. Update app name & `PHX_HOST` in `fly.toml` and commit the changes
+2. Launch Fly.io app: `fly launch`
+3. Reset concurrency settings in `fly.toml` and deploy again: `git restore fly.toml && fly deploy`
+4. Stop one machine and open its logs: `fly machine list` / `fly machine stop ${id}` / `fly logs --machine ${id}`
+5. [Install k6](https://grafana.com/docs/k6/latest/set-up/install-k6/)
+6. Update `SERVER_URL` in `load-testing.js`
+7. Run `k6 run load-testing.js`
