@@ -16,6 +16,7 @@ defmodule FlyHealthCheck.Application do
       {Finch, name: FlyHealthCheck.Finch},
       # Start a worker by calling: FlyHealthCheck.Worker.start_link(arg)
       # {FlyHealthCheck.Worker, arg},
+      FlyHealthCheck.Startup,
       # Start to serve requests, typically the last entry
       FlyHealthCheckWeb.Endpoint
     ]
