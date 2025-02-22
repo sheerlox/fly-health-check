@@ -12,6 +12,7 @@ defmodule FlyHealthCheckWeb.Endpoint do
   ]
 
   plug FlyHealthCheckWeb.Plugs.HealthCheck
+  plug FlyHealthCheckWeb.Plugs.SlowRequest
 
   socket "/live", Phoenix.LiveView.Socket,
     websocket: [connect_info: [session: @session_options]],
